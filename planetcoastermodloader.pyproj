@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{a4c10b9f-772c-4b2d-a95c-1f6a4b785746}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>main.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="pcm.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-down-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-left-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-up-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\chevron\arrow-up-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-left-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\open\arrow-up-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-down-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-left-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-left-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-right-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-up-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg\arrow-up-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-left-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\arrow\solid\arrow-up-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\button-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\button-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\button-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\button-p.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\roundedrect-accent\button-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\roundedrect-accent\button-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\roundedrect-accent\button-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\roundedrect-accent\button-p.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-af-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-af.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-f.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat\button-p.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-sa-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev\cb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-sa-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check\cb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square\cb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient\cb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient\cb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient\cb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient\cb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient\cb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x\cb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x\cb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x\cb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x\cb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x\cb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg\combo-arrow-down-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg\combo-arrow-down-d-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg\combo-arrow-down-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg\combo-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg\combo-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\empty\empty\empty.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\entry\roundedrect\entry-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\entry\roundedrect\entry-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\entry\roundedrect\entry-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\entry\roundedrect\entry-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\labelframe\square\labelframe-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\labelframe\square\labelframe-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\chevron\mb-arrow-down-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\chevron\mb-arrow-down-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\chevron\mb-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\chevron\mb-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\solid\mb-arrow-down-d-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\solid\mb-arrow-down-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\solid\mb-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\menubutton\solid\mb-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark\notebook-tab-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark\notebook-tab-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark\notebook-tab-h.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark\notebook-tab-i-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark\notebook-tab-i.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent\notebook-tab-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent\notebook-tab-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent\notebook-tab-h.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent\notebook-tab-i-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent\notebook-tab-i.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light\notebook-tab-a.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light\notebook-tab-d.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light\notebook-tab-h.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light\notebook-tab-i-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light\notebook-tab-i.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\slider-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\slider-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\slider-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\slider-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\slider-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\trough-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\trough-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\trough-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\trough-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord\trough-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\slider-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\slider-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\slider-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\slider-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\slider-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\trough-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\trough-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\trough-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\trough-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rect\trough-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\slider-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\slider-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\slider-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\slider-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-vn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line\trough-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient\rb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient\rb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient\rb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient\rb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient\rb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg\rb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev\rb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-sa.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-ua.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle\rb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle\rb-sd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle\rb-sn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle\rb-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle\rb-ud.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle\rb-un.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\README.txt" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle-rev\scale-ha.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle-rev\scale-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle-rev\scale-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle\scale-ha.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle\scale-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\circle\scale-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-va.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle\scale-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect\scale-hd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect\scale-hn-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect\scale-hn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect\scale-vd.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scale\rect\scale-vn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\circle\sb-slider-h-grip-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\circle\sb-slider-h-grip.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\circle\sb-slider-v-grip-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\circle\sb-slider-v-grip.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\sizegrip\circle\sizegrip-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\sizegrip\circle\sizegrip.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\chevron\tree-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\chevron\tree-arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\chevron\tree-arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\chevron\tree-arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\open\tree-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\open\tree-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\open\tree-arrow-right-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\open\tree-arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-right-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box\tree-arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-down-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-down-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-down-sn.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-right-n-base.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-right-n.svg" />
+    <Content Include="awthemes-9.3.1\i\awthemes\treeview\solid\tree-arrow-right-sn.svg" />
+    <Content Include="awthemes-9.3.1\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="awthemes-9.3.1" />
+    <Folder Include="awthemes-9.3.1\i\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\arrow\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\arrow\chevron" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\arrow\open" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\arrow\solid" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\arrow\solid-bg" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\button\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\button\roundedrect-accent-gradient\roundedrect-accent" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\button\roundedrect-flat" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-check-rev" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\roundedrect-square" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\square-check-gradient" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\checkbutton\square-x" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\combobox\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\combobox\solid-bg" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\empty\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\empty\empty" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\entry\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\entry\roundedrect" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\labelframe\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\labelframe\square" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\menubutton\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\menubutton\chevron" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\menubutton\solid" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\notebook\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-dark" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\notebook\roundedtop-light-accent" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\progressbar\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\progressbar\rect" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\progressbar\rect-bord" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\progressbar\rounded-line" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-gradient" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-hlbg" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\circle-circle-rev" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\radiobutton\octagon-circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scale\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scale\circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scale\circle-rev" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scale\rect" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scale\rect-bord-circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\scrollbar-grip\circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\sizegrip\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\sizegrip\circle" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\treeview\" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\treeview\chevron" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\treeview\open" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\treeview\plusminus-box" />
+    <Folder Include="awthemes-9.3.1\i\awthemes\treeview\solid" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
