@@ -105,7 +105,7 @@ class Gui():
         self.exportModToolbarFrame = ttk.Frame(self.packModFrame)
         self.exportModToolbarFrame.grid(row=2, column=0, sticky="nsew")
 
-        self.exportModCreateNew = ttk.Button(self.exportModToolbarFrame, text="Add New", command = lambda: self.createNewExportFile())
+        self.exportModCreateNew = ttk.Button(self.exportModToolbarFrame, text="Add New", command = lambda: self.createNewExportFile(self))
         self.exportModExport = ttk.Button(self.exportModToolbarFrame, text="Pack", command = lambda: self.pack())
 
         self.exportModCreateNew.grid(row=0, column=0, sticky="wns")
@@ -133,14 +133,14 @@ class Gui():
 
         self.mainWindow.mainloop()
 
-    def createNewExportFile(self):
+    def createNewExportFile(self, gui):
 
         if not hasattr(self, 'exportFileList'):
 
             self.exportFileList = []
 
-        fileDir = askopenfilename()
-        ovlDir = askopenfilename()
+        fileDir = askopenfilename(initialdir = dir_path)
+        ovlDir = askopenfilename(initialdir = gui.planetCoasterDir)
 
         self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame, len(self.exportFileList), 0, ovlDir, fileDir))
 
