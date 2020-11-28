@@ -5,9 +5,11 @@ import configparser
 import pcm
 from tkinter import ttk
 from tkinter import font
-from tkinter.filedialog import askopenfilename, askdirectory
+from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames
 from tkinter import messagebox
 from tkinter import simpledialog
+
+from TkinterDnD2 import *
 
 import shutil
 import json
@@ -71,6 +73,12 @@ class Gui():
         self.mainWindow.grid_columnconfigure(0, weight=1)
         self.mainWindow.grid_rowconfigure(0, weight=1)
 
+        #self.entry_sv = tk.StringVar()
+        #self.entry = tk.Entry(self.mainWindow, textvar=self.entry_sv, width=80)
+        #self.entry.pack(fill=tk.X)
+        #self.entry.drop_target_register(DND_FILES)
+        #self.entry.dnd_bind('<<Drop>>', self.drop)
+
         self.tabs = ttk.Notebook(self.mainWindow, takefocus=False)
         self.tabs.grid(row=0, column=0, sticky="NSEW")
 
@@ -133,18 +141,22 @@ class Gui():
 
         self.mainWindow.mainloop()
 
+    def drop(event):
+        self.entry_sv.set(event.data)
+
     def createNewExportFile(self, gui):
 
         if not hasattr(self, 'exportFileList'):
 
             self.exportFileList = []
 
-        fileDir = askopenfilename(initialdir = dir_path)
-        ovlDir = askopenfilename(initialdir = gui.planetCoasterDir)
+        fileDir = askopenfilenames(initialdir = dir_path)
+        #ovlDir = askopenfilename(initialdir = gui.planetCoasterDir)
+        ovlDir = ""
 
-        self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame, len(self.exportFileList), 0, ovlDir, fileDir))
-
-        self.exportFileList[-1].entryVar.set(fileDir)
+        for file in fileDir:
+            self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame, len(self.exportFileList), 0, ovlDir, file))
+            self.exportFileList[-1].entryVar.set(ovlDir)
 
     def styles(self):
 
@@ -190,12 +202,13 @@ class Gui():
         self.out = {}
         self.out["Files"] = {}
         self.temp = sorted(self.exportFileList, key=lambda x: x.ovlFile, reverse=True)
-        for self.test in self.temp:
-            self.shortenedOVLPath = self.test.ovlFile[self.test.ovlFile.find("Win64"):]
+        for i,self.test in enumerate(self.temp):
+            self.OVLPath = self.exportFileList[i].entryVar.get()
+            self.shortenedOVLPath = self.OVLPath[self.OVLPath.find("Win64"):]
             self.out["Files"][self.shortenedOVLPath] = []
 
         for self.test in self.temp:
-            self.shortenedOVLPath = self.test.ovlFile[self.test.ovlFile.find("Win64"):]
+            self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
             self.out["Files"][self.shortenedOVLPath].append((self.test.file.rsplit("/",1)[1]))
 
         self.saveDir = "Mods/" + self.modName
@@ -210,14 +223,15 @@ class Gui():
         self.PCM.pcm_write_to_file(self.saveDir)
 
         for self.test in self.temp:
-            self.shortenedOVLPath = self.test.ovlFile[self.test.ovlFile.find("Win64"):]
-            self.dirName = self.shortenedOVLPath.replace("/","_")
+            self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
+            self.dirName = self.shortenedOVLPath.replace("\\","_")
             self.dirName = self.dirName.replace(":","#")
+            print(self.saveDir + "/" + self.dirName)
             try:
                 os.mkdir(self.saveDir + "/" + self.dirName)
             except:
                 pass
-            shutil.copyfile(self.test.file, self.saveDir + "/" + self.dirName + "/" + self.test.file.split("/")[-1])
+            shutil.copyfile(self.test.file, self.saveDir + "/" + self.dirName + "/" +self.test.file.split("/")[-1])
 
         shutil.make_archive(self.saveDir, 'zip', self.saveDir)
         os.rename(self.saveDir + ".zip", self.saveDir + ".pcm")
@@ -255,18 +269,18 @@ def inject_mod(gui, filepath):
                 filesTemp = []
                 for file in files:
                     #Major sanitisation required
-                    count = path.count("/")
-                    sanitised_path = path.replace("/","_")
+                    count = path.count("\\")
+                    sanitised_path = path.replace("\\","_")
                     sanitised_path = sanitised_path.replace(":", "#")
                     sanitised_path = sanitised_path[sanitised_path.find("Win64"):]
 
-                    sanitised_file = file.split("/")
+                    sanitised_file = file.split("\\")
                     name = sanitised_path + "/" + sanitised_file[-1]
 
                     zip.extract(name, path=temppath)
 
                     #print("PATH AGAIN: " + str(file.rsplit("/",1)))
-                    fileSplit = file.rsplit("/",1)
+                    fileSplit = file.rsplit("\\",1)
                     #file = fileSplit[0] + "/" + temppath + "/" + sanitised_path + "/" + fileSplit[1]
                     file = dir_path + "/" + temppath + "/" + sanitised_path + "/" + file
                     print("File: " + file)
@@ -327,7 +341,7 @@ class ChangedFiles():
         self.frame.grid_columnconfigure(0, weight=0, uniform="title", minsize=135)
         self.frame.grid_columnconfigure(1, weight=1, uniform="dir")
 
-        self.directoryLabel = ttk.Label(self.frame, text = ovlFile.split("/")[-1])
+        self.directoryLabel = ttk.Label(self.frame, text = file.split("/")[-1])
 
         self.entryVar = tk.StringVar()
 
@@ -344,8 +358,6 @@ class ChangedFiles():
 
         self.frame.destroy()
         self.gui.exportFileList.pop(self.gui.exportFileList.index(self))
-
-
 
 
 
