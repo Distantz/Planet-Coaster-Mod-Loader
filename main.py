@@ -88,7 +88,7 @@ class Gui():
         self.manageModsLabel = ttk.Label(self.manageModsFrame, text="Manage Mods", font=self.headerFont, anchor="center")
         self.manageModsLabel.grid(row=0, column=0, sticky="NEW", columnspan=2)
 
-        self.manageModsInstallButton = ttk.Button(self.manageModsFrame, text="Install", command= lambda: inject_mod(self, askopenfilename()))
+        self.manageModsInstallButton = ttk.Button(self.manageModsFrame, text="Install", command= lambda: inject_mod(self, askopenfilename(initialdir = dir_path+"/Mods")))
         self.manageModsInstallButton.grid(row=1, column=0, sticky="e")
 
         self.manageModsRestoreButton = ttk.Button(self.manageModsFrame, text="Restore", command= lambda: restore(self))
@@ -196,7 +196,7 @@ class Gui():
 
         for self.test in self.temp:
             self.shortenedOVLPath = self.test.ovlFile[self.test.ovlFile.find("Win64"):]
-            self.out["Files"][self.shortenedOVLPath].append(self.test.file)
+            self.out["Files"][self.shortenedOVLPath].append((self.test.file.rsplit("/",1)[1]))
 
         self.saveDir = "Mods/" + self.modName
         try:
@@ -267,7 +267,8 @@ def inject_mod(gui, filepath):
 
                     #print("PATH AGAIN: " + str(file.rsplit("/",1)))
                     fileSplit = file.rsplit("/",1)
-                    file = fileSplit[0] + "/" + temppath + "/" + sanitised_path + "/" + fileSplit[1]
+                    #file = fileSplit[0] + "/" + temppath + "/" + sanitised_path + "/" + fileSplit[1]
+                    file = dir_path + "/" + temppath + "/" + sanitised_path + "/" + file
                     print("File: " + file)
                     filesTemp.append(file)
 

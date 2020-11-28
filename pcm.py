@@ -21,10 +21,6 @@ class pcm:
 		})
 		return self.data
 
-	def write_fileData(self, path, name):
-		self.data["Files"][path].append(name)
-		return self.data
-
 	def write_pcm(self):
 		self.data["Files"] = {}
 		#self.data["Files"][self.path] = []
