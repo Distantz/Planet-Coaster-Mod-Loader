@@ -174,7 +174,7 @@ class Gui():
                 else:
                     break
 
-            os.mkdir(self.planetCoasterDir + "\\backups")
+            #os.mkdir(self.planetCoasterDir + "\\backups")
             self.config["DEFAULT"] = {
                 "GameDirectory": self.planetCoasterDir, "HasSetup": True}
             
