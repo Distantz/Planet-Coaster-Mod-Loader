@@ -171,7 +171,7 @@ class Gui():
         self.planetCoasterDir = self.config["DEFAULT"]["GameDirectory"]
 
 
-        if self.config["DEFAULT"]["HasSetup"] != "True":
+        if self.config["DEFAULT"]["HasSetup"] != "True" or not os.path.isdir(self.config["DEFAULT"]["GameDirectory"]):
 
             self.planetCoasterDir = messagebox.showinfo("Welcome!", "Please select your Planet Coaster installation folder (usually found in the Steamgames folder)") 
 
