@@ -41,7 +41,7 @@ class Gui():
         self.mainWindow = tk.Tk()
 
         self.mainWindow.geometry("400x800+600+350")
-        self.mainWindow.title("Planco Mod Manager")
+        self.mainWindow.title("PC Mod Manager")
 
         global dir_path
 
@@ -105,7 +105,7 @@ class Gui():
         self.exportModsLabel = ttk.Label(self.packModFrame, text="Pack PCM", font=self.headerFont, anchor="center")
         self.exportModsLabel.grid(row=0, column=0, sticky="NEW")
 
-        self.exportModCanvasFrame = tk.Frame(self.packModFrame, bg=self.style.lookup('TButton', 'background'), highlightbackground=self.style.lookup('TButton', 'bordercolor'), highlightthickness=2)
+        self.exportModCanvasFrame = tk.Frame(self.packModFrame, bg=self.style.lookup('TButton', 'background'), highlightbackground=self.style.lookup('TButton', 'bordercolor'), highlightcolor = self.style.lookup('TButton', 'bordercolor'), highlightthickness=2)
         self.exportModCanvasFrame.grid(row=1, column=0, sticky="nsew")
 
         self.exportModCanvasFrame.grid_columnconfigure(0, weight=1)
@@ -337,27 +337,74 @@ class ChangedFiles():
         self.gui = gui
         self.file = file
         self.ovlFile = ovlFile
-        self.frame = ttk.Frame(parent)
+        self.frame = ttk.Frame(parent, borderwidth = 4)
+
+        self.dirFrame = ttk.Frame(self.frame)
+
         self.frame.grid_columnconfigure(0, weight=0, uniform="title", minsize=135)
         self.frame.grid_columnconfigure(1, weight=1, uniform="dir")
 
-        self.directoryLabel = ttk.Label(self.frame, text = file.split("/")[-1])
+        self.directoryLabel = ttk.Label(self.frame, text = file.split("/")[-1], font = font.Font(size=11, weight="bold"))
 
         self.entryVar = tk.StringVar()
 
-        self.entryLabel = ttk.Entry(self.frame, exportselection=0, textvariable=self.entryVar)
-
+        self.entryLabel = ttk.Entry(self.dirFrame, exportselection=0, textvariable=self.entryVar)
         self.entryLabel.bind("<1>", lambda event:self.entryLabel.focus_set())
-        self.destroyButton = tk.Button(self.frame, text="×", bg="#c23b15", highlightbackground="#FFFFFF", command=lambda: self.destroy())
+
+        self.entryLabel.focus_set()
+        self.entryLabel.insert(index = 0, string = "Enter targeted OVL path")
+
+        self.ovlDirButton = ttk.Button(self.dirFrame, text="Quickfill Dir", command=lambda: self.entryVar.set(self.setAndTruncateDir()))
+
+        self.destroyButton = ttk.Button(self.frame, text="×", command=lambda: self.destroy())
+
         self.frame.grid(row=row, column=column, sticky="ew")
         self.directoryLabel.grid(row=0, column=0, sticky="nsw")
-        self.entryLabel.grid(row=0, column=1, sticky="nsew")
-        self.destroyButton.grid(row=0, column=2, sticky="nse")
+        self.destroyButton.grid(row=0, column=1, sticky="nse")
+
+        self.destroyButton.configure(width=self.destroyButton.winfo_height() * 2)
+
+        self.dirFrame.grid(row=1, column=0, columnspan=2, sticky="nsew")
+
+        self.dirFrame.grid_columnconfigure(0, weight=1, uniform="dir")
+        self.dirFrame.grid_columnconfigure(1, weight=0, uniform="selfFill", minsize=135)
+
+        self.entryLabel.grid(row=2, column=0, sticky="nsew")
+        self.ovlDirButton.grid(row = 2, column=1, sticky="nsew")
+
 
     def destroy(self):
 
         self.frame.destroy()
         self.gui.exportFileList.pop(self.gui.exportFileList.index(self))
+
+    def setAndTruncateDir(self):
+
+        ovlDir = askopenfilename(filetypes=[("Archive File","*.ovl")])
+
+        if ovlDir != "":
+
+            if self.gui.planetCoasterDir in ovlDir:
+
+                dir = ovlDir.replace(self.gui.planetCoasterDir, "")
+            
+                if dir.split(".")[-1] != "ovl":
+
+                    messagebox.showerror("Error", "Not an OVL file!")
+                    return self.entryVar.get()
+
+                else:
+
+                    return dir 
+
+            else:
+
+                messagebox.showerror("Error", "Not a valid Planet Coaster directory!")
+                return self.entryVar.get()
+
+        else:
+
+            return self.entryVar.get()
 
 
 
