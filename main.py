@@ -105,7 +105,7 @@ class Gui():
         self.exportModsLabel = ttk.Label(self.packModFrame, text="Pack PCM", font=self.headerFont, anchor="center")
         self.exportModsLabel.grid(row=0, column=0, sticky="NEW")
 
-        self.exportModCanvasFrame = tk.Frame(self.packModFrame, bg=self.style.lookup('TButton', 'background'), highlightbackground=self.style.lookup('TButton', 'bordercolor'), highlightcolor = self.style.lookup('TButton', 'bordercolor'), highlightthickness=2)
+        self.exportModCanvasFrame = ScrollableFrame(self.packModFrame, self)
         self.exportModCanvasFrame.grid(row=1, column=0, sticky="nsew")
 
         self.exportModCanvasFrame.grid_columnconfigure(0, weight=1)
@@ -155,7 +155,7 @@ class Gui():
         ovlDir = ""
 
         for file in fileDir:
-            self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame, len(self.exportFileList), 0, ovlDir, file))
+            self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame.scrollable_frame, len(self.exportFileList), 0, ovlDir, file))
             self.exportFileList[-1].entryVar.set(ovlDir)
 
     def styles(self):
@@ -337,7 +337,7 @@ class ChangedFiles():
         self.gui = gui
         self.file = file
         self.ovlFile = ovlFile
-        self.frame = ttk.Frame(parent, borderwidth = 4)
+        self.frame = ttk.Frame(parent, borderwidth = 4, height=5)
 
         self.dirFrame = ttk.Frame(self.frame)
 
@@ -358,7 +358,7 @@ class ChangedFiles():
 
         self.destroyButton = ttk.Button(self.frame, text="×", command=lambda: self.destroy())
 
-        self.frame.grid(row=row, column=column, sticky="ew")
+        self.frame.grid(row=row, column=column, sticky="nsew")
         self.directoryLabel.grid(row=0, column=0, sticky="nsw")
         self.destroyButton.grid(row=0, column=1, sticky="nse")
 
@@ -371,7 +371,6 @@ class ChangedFiles():
 
         self.entryLabel.grid(row=2, column=0, sticky="nsew")
         self.ovlDirButton.grid(row = 2, column=1, sticky="nsew")
-
 
     def destroy(self):
 
@@ -405,6 +404,40 @@ class ChangedFiles():
         else:
 
             return self.entryVar.get()
+
+
+
+## Taken from 
+## https://blog.tecladocode.com/tkinter-scrollable-frames/
+
+class ScrollableFrame(ttk.Frame):
+    def __init__(self, container, gui, *args, **kwargs):
+        super().__init__(container, *args, **kwargs)
+
+        print(gui.style.element_options("Frame.border"))
+
+        self.canvas = tk.Canvas(self, bg=gui.style.lookup("TFrame", "background"), highlightcolor=gui.style.lookup("TFrame", "darkcolor"), highlightbackground=gui.style.lookup("TFrame", "darkcolor"))
+        scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = ttk.Frame(self.canvas, borderwidth=0)
+
+        self.scrollable_frame.grid_columnconfigure(0, weight=1)
+
+        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvasWindow = self.canvas.create_window((4, 4), window=self.scrollable_frame, anchor="nw")
+
+        def resize(evt):
+
+            self.canvas.itemconfig(self.canvasWindow, width = self.canvas.winfo_width() - 4)
+
+
+        self.canvas.bind("<Configure>", resize)
+
+
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+
+        self.canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
 
 
