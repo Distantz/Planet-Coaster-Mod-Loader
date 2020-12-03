@@ -148,12 +148,12 @@ class Mod():
         self.ovsDestination = self.getBackupPathDestination(relativeFilepath)[:-1] + "s"
 
         if not os.path.exists(self.destination):
-            shutil.copy(self.directory, self.destination)
+            shutil.copyfile(self.directory, self.destination)
         else:
             pass
 
         if os.path.exists(self.ovsDir):
-            shutil.copy(self.ovsDir, self.ovsDestination)
+            shutil.copyfile(self.ovsDir, self.ovsDestination)
 
     def getBackupPathDestination(self, relativeFilepath):
         self.backupOVLPath ="{}\{}".format(self.gui.planetCoasterDir + "/backups", relativeFilepath.replace("/", "]").replace("\\" , "]").replace(":","#"))
