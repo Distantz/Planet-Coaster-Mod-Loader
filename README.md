@@ -24,7 +24,8 @@ Once finished, the mod can be exported by clicking the Pack button at the bottom
 ## Credits
 
 ### Developers
-Evan
+Evan,
+
 Thomas
 
 Uses a large amount of code for injecting game files from https://github.com/OpenNaja/cobra-tools, thank you!
