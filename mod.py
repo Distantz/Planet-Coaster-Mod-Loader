@@ -61,7 +61,7 @@ class Mod():
     def uninstall(self):
         self.gui.modList.pop(self.gui.modList.index(self))
         for i,backup  in enumerate(self.backupPaths):
-            self.backuppath = self.gui.planetCoasterDir + "/backups/" + backup.replace("\\","]")
+            self.backuppath = self.gui.planetCoasterDir + "/backups/" + backup.replace("/","]")
             print(self.backuppath)
             shutil.copyfile(self.backuppath, self.gui.planetCoasterDir + "/" + self.OVLs[i])
             if os.path.exists(self.backuppath[:-1]+"s"):
@@ -76,6 +76,10 @@ class Mod():
             else:
                 self.modData = json.loads(tempdata)
             self.modData.pop(self.modName, None)
+
+            with open("Data/Mods.json", "w") as file:
+                json.dump(self.modData, file)
+
         #print("backup {}".format(self.getBackupPathDestination(self.backupPath)))
         #restore(self.gui, self.getBackupPathDestination(self.backupPath))
 
@@ -104,7 +108,7 @@ class Mod():
                     self.filesTemp = []
                     for self.file in self.files:
                         #Major sanitisation required
-                        self.sanitised_path = self.path.replace("\\","_")
+                        self.sanitised_path = self.path.replace("/","_")
                         self.sanitised_path = self.sanitised_path.replace(":", "#") #Needed?
                         self.sanitised_path = self.sanitised_path[self.sanitised_path.find("Win64"):]
 

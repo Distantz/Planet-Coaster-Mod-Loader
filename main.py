@@ -2,12 +2,12 @@ import tkinter as tk
 import os
 import shutil
 import configparser
+import subprocess
 import pcm
 from tkinter import ttk
 from tkinter import font
 from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames
 from tkinter import messagebox
-from tkinter import simpledialog
 
 from mod import *
 
@@ -39,7 +39,8 @@ class Gui():
         global dir_path
 
         dir_path = os.path.dirname(os.path.realpath(__file__)).replace("\\", "/")
-        print(dir_path)
+
+        self.mainWindow.iconbitmap(dir_path + '/Data/icon.ico')
 
         self.styles()
 
@@ -72,6 +73,7 @@ class Gui():
         self.manageModsFrame = ttk.Frame(self.tabs)
         self.manageModsFrame.grid_columnconfigure(0, weight=1)
         self.manageModsFrame.grid_columnconfigure(1, weight=1)
+        self.manageModsFrame.grid_rowconfigure(1, weight=1)
 
         self.packModFrame = ttk.Frame(self.tabs)
         self.packModFrame.grid_columnconfigure(0, weight=1)
@@ -83,33 +85,73 @@ class Gui():
         self.manageModsLabel = ttk.Label(self.manageModsFrame, text="Manage Mods", font=self.headerFont, anchor="center")
         self.manageModsLabel.grid(row=0, column=0, sticky="NEW", columnspan=2)
 
-        self.manageModsInstallButton = ttk.Button(self.manageModsFrame, text="Install", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path+"/Mods")))
-        self.manageModsInstallButton.grid(row=1, column=0, sticky="e")
+        self.manageModsScrollFrame = ScrollableFrame(self.manageModsFrame, self)
+        self.manageModsScrollFrame.grid(row=1, column=0, sticky="NESW", columnspan=2)
 
-        self.manageModsRestoreButton = ttk.Button(self.manageModsFrame, text="Restore", command= lambda: restore(self))
-        self.manageModsRestoreButton.grid(row=1, column=1, sticky="w")
+        for x in range(len(self.modList)):
+        
+            ModTileWidget(self.modList[x], self, self.manageModsScrollFrame.scrollable_frame, x, 0)
+
+
+        self.manageModsButtonFrame = ttk.Frame(self.manageModsFrame)
+        self.manageModsButtonFrame.grid(row=2, column=0, columnspan=2, sticky="nsew")
+
+        self.manageModsButtonFrame.grid_columnconfigure(0, weight=0, uniform="button")
+        self.manageModsButtonFrame.grid_columnconfigure(1, weight=0, uniform="button")
+        self.manageModsButtonFrame.grid_columnconfigure(2, weight=0, uniform="button")
+
+        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path+"/Mods")))
+        self.manageModsInstallButton.grid(row=0, column=0, sticky="nsew")
+
+        self.manageModsRestoreButton = ttk.Button(self.manageModsButtonFrame, text="Uninstall all mods", command= lambda: restore(self))
+        self.manageModsRestoreButton.grid(row=0, column=1, sticky="nsew")
+
+        self.manageModsLaunchGameButton = ttk.Button(self.manageModsButtonFrame, text="Launch Planet Coaster", command=lambda: subprocess.run("cmd /c start steam://run/493340"))
+        self.manageModsLaunchGameButton.grid(row=0, column=2, sticky="nsew")
+
+
 
         self.exportModsLabel = ttk.Label(self.packModFrame, text="Pack PCM", font=self.headerFont, anchor="center")
         self.exportModsLabel.grid(row=0, column=0, sticky="NEW")
 
-        self.exportModCanvasFrame = tk.Frame(self.packModFrame, bg=self.style.lookup('TButton', 'background'), highlightbackground=self.style.lookup('TButton', 'bordercolor'), highlightcolor = self.style.lookup('TButton', 'bordercolor'), highlightthickness=2)
+        self.exportModCanvasFrame = ScrollableFrame(self.packModFrame, self)
         self.exportModCanvasFrame.grid(row=1, column=0, sticky="nsew")
 
         self.exportModCanvasFrame.grid_columnconfigure(0, weight=1)
 
+        self.exportModMetaFrame = ttk.Frame(self.packModFrame)
+        self.exportModMetaFrame.grid(row=2, column=0, sticky="nsew")
+
+        self.metaNameLabel = ttk.Label(self.exportModMetaFrame, text="Name:", font = font.Font(size=11, weight="bold"))
+        self.metaNameEntry = ttk.Entry(self.exportModMetaFrame)
+
+        self.metaDescLabel = ttk.Label(self.exportModMetaFrame, text="Description:", font = font.Font(size=11, weight="bold"))
+        self.metaDescEntry = ttk.Entry(self.exportModMetaFrame)
+
+        self.metaAuthLabel = ttk.Label(self.exportModMetaFrame, text="Author(s):", font = font.Font(size=11, weight="bold"))
+        self.metaAuthEntry = ttk.Entry(self.exportModMetaFrame)
+
+        self.metaNameLabel.grid(row=0, column=0, sticky="nsew")
+        self.metaNameEntry.grid(row=1, column=0, sticky="nsew")
+        self.metaDescLabel.grid(row=2, column=0, sticky="nsew")
+        self.metaDescEntry.grid(row=3, column=0, sticky="nsew")
+        self.metaAuthLabel.grid(row=4, column=0, sticky="nsew")
+        self.metaAuthEntry.grid(row=5, column=0, sticky="nsew")
+
+        self.exportModMetaFrame.grid_columnconfigure(0, weight=1)
+
         self.exportModToolbarFrame = ttk.Frame(self.packModFrame)
-        self.exportModToolbarFrame.grid(row=2, column=0, sticky="nsew")
+        self.exportModToolbarFrame.grid(row=3, column=0, sticky="nsew")
 
-        self.exportModCreateNew = ttk.Button(self.exportModToolbarFrame, text="Add New", command = lambda: self.createNewExportFile(self))
-        self.exportModExport = ttk.Button(self.exportModToolbarFrame, text="Pack", command = lambda: self.pack())
+        self.exportModCreateNew = ttk.Button(self.exportModToolbarFrame, text="Add File", command = lambda: self.createNewExportFile(self))
+        self.exportModExport = ttk.Button(self.exportModToolbarFrame, text="Pack Mod", command = lambda: self.pack())
 
-        self.exportModCreateNew.grid(row=0, column=0, sticky="wns")
-        self.exportModExport.grid(row=0, column=2, sticky="ens")
+        self.exportModCreateNew.grid(row=0, column=0, sticky="nsew")
+        self.exportModExport.grid(row=0, column=1, sticky="nsew")
 
-        self.exportModToolbarFrame.grid_columnconfigure(0, weight=1)
+        self.exportModToolbarFrame.grid_columnconfigure(0, weight=0, uniform="button")
+        self.exportModToolbarFrame.grid_columnconfigure(2, weight=0, uniform="button")
         self.exportModToolbarFrame.grid_rowconfigure(0, weight=1)
-        self.exportModToolbarFrame.grid_columnconfigure(2, weight=1)
-
         self.packModFrame.grid_rowconfigure(2, weight=0, minsize=45)
 
         self.tabs.bind("<<NotebookTabChanged>>", lambda event:self.mainWindow.focus_set())
@@ -134,11 +176,11 @@ class Gui():
 
             self.exportFileList = []
 
-        fileDir = askopenfilenames(initialdir = dir_path)
+        fileDir = askopenfilenames()
         ovlDir = ""
 
         for file in fileDir:
-            self.exportFileList.append(ChangedFiles(self, self.exportModCanvasFrame, len(self.exportFileList), 0, ovlDir, file))
+            self.exportFileList.append(PackFileWidget(self, self.exportModCanvasFrame.scrollable_frame, len(self.exportFileList), 0, ovlDir, file))
             self.exportFileList[-1].entryVar.set(ovlDir)
 
     def styles(self):
@@ -177,9 +219,9 @@ class Gui():
 
     def pack(self):
 
-        self.modName = simpledialog.askstring(title="Test", prompt="Name: ")
+        self.modName = self.metaNameEntry.get()
 
-        self.Meta = pcm.meta("Jan","Evan","AHH")
+        self.Meta = pcm.meta(self.modName ,self.metaAuthEntry.get(),self.metaDescEntry.get())
 
         self.out = {}
         self.out["Files"] = {}
@@ -198,7 +240,7 @@ class Gui():
             os.mkdir(self.saveDir)
         except:
             pass
-        self.Meta = pcm.meta("Jan","Evan","AHH")
+        self.Meta = pcm.meta(self.metaNameEntry.get() ,self.metaAuthEntry.get(),self.metaDescEntry.get())
         self.PCM = pcm.pcm(self.out, self.Meta)
         self.PCM.write_meta()
         self.PCM.write_pcm()
@@ -206,7 +248,7 @@ class Gui():
 
         for self.test in self.temp:
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
-            self.dirName = self.shortenedOVLPath.replace("\\","_")
+            self.dirName = self.shortenedOVLPath.replace("/","_")
             self.dirName = self.dirName.replace(":","#")
             print(self.saveDir + "/" + self.dirName)
             try:
@@ -221,15 +263,21 @@ class Gui():
 
     def inject_mod(self, filepath):
         self.modToBeInjected = Mod(self)
+
+        print(len(self.modList))
+
         self.modList = self.loadModsList()
         self.modToBeInjected.loadMeta(filepath)
+        print(filepath)
             
         if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
             self.modToBeInjected.install(filepath)
             self.modToBeInjected.save()
             self.modList.append(self.modToBeInjected)
+            ModTileWidget(self.modToBeInjected, self, self.manageModsScrollFrame.scrollable_frame, self.modList.index(self.modToBeInjected), 0)
+
         else:
-            messagebox.showinfo("Ahh!", "Mod with this name is already installed") #Add in option to continue?
+            messagebox.showinfo("Information", "Mod with this name is already installed, try remove any mods with the same name!") #Add in option to continue? 
 
     def loadModsList(self):
         self.tempList = []
@@ -248,21 +296,21 @@ class Gui():
                 self.tempList.append(self.newMod)
         return self.tempList
 
-class ChangedFiles():
+class PackFileWidget():
 
     def __init__(self, gui, parent, row, column, ovlFile, file):
 
         self.gui = gui
         self.file = file
         self.ovlFile = ovlFile
-        self.frame = ttk.Frame(parent, borderwidth = 4)
+        self.frame = ttk.Frame(parent, borderwidth = 4, height=5)
 
         self.dirFrame = ttk.Frame(self.frame)
 
         self.frame.grid_columnconfigure(0, weight=0, uniform="title", minsize=135)
         self.frame.grid_columnconfigure(1, weight=1, uniform="dir")
 
-        self.directoryLabel = ttk.Label(self.frame, text = file.split("/")[-1], font = font.Font(size=11, weight="bold"))
+        self.directoryLabel = ttk.Label(self.frame, text = file.split("/")[-1], font = font.Font(size=14, weight="bold"))
 
         self.entryVar = tk.StringVar()
 
@@ -276,7 +324,7 @@ class ChangedFiles():
 
         self.destroyButton = ttk.Button(self.frame, text="×", command=lambda: self.destroy())
 
-        self.frame.grid(row=row, column=column, sticky="ew")
+        self.frame.grid(row=row, column=column, sticky="nsew")
         self.directoryLabel.grid(row=0, column=0, sticky="nsw")
         self.destroyButton.grid(row=0, column=1, sticky="nse")
 
@@ -290,7 +338,6 @@ class ChangedFiles():
         self.entryLabel.grid(row=2, column=0, sticky="nsew")
         self.ovlDirButton.grid(row = 2, column=1, sticky="nsew")
 
-
     def destroy(self):
 
         self.frame.destroy()
@@ -298,7 +345,7 @@ class ChangedFiles():
 
     def setAndTruncateDir(self):
 
-        ovlDir = askopenfilename(filetypes=[("Archive File","*.ovl")])
+        ovlDir = askopenfilename(filetypes=[("Archive File","*.ovl")], initialdir=self.gui.planetCoasterDir+"/Win64/ovldata")
 
         if ovlDir != "":
 
@@ -323,6 +370,95 @@ class ChangedFiles():
         else:
 
             return self.entryVar.get()
+
+class ModTileWidget():
+
+    def __init__(self, modfile, gui, parent, row, column):
+
+
+        self.gui = gui
+
+        self.modFile = modfile
+
+        self.modName = modfile.modName
+        self.modDesc = modfile.modDesc
+        self.modAuthor = modfile.modAuthor
+
+        self.containerFrame = ttk.Frame(parent, borderwidth=4)
+        self.metaFrame = ttk.Frame(self.containerFrame, borderwidth=0)
+
+        self.nameLabel = ttk.Label(self.containerFrame, text=self.modName, font = font.Font(size=14, weight="bold"))
+        self.descLabel = ttk.Label(self.metaFrame, text=self.modDesc, justify="left", anchor = "nw")
+        self.authLabel = ttk.Label(self.metaFrame, text="By: " + self.modAuthor, font = font.Font(size=10, weight="bold"))
+
+        self.spacer = ttk.Separator(self.metaFrame)
+
+        self.nameLabel.grid(row=0, column=0, sticky="nsew")
+        self.descLabel.grid(row=0, column=0, sticky="nsew")
+        self.spacer.grid(row=1, column=0, sticky="sew")
+        self.authLabel.grid(row=2, column=0, sticky="sew")
+
+        self.metaFrame.grid_columnconfigure(0, weight=1)
+        self.metaFrame.grid_rowconfigure(0, weight=1)
+
+        self.containerFrame.grid_columnconfigure(0, weight=1)
+
+        self.destroyButton = ttk.Button(self.containerFrame, text="×", command=lambda: self.destroy())
+
+        self.destroyButton.grid(row=0, column=1, sticky="nw")
+
+        self.destroyButton.configure(width=self.destroyButton.winfo_height() * 2)
+
+        def reTextWrap(evt):
+
+            self.descLabel.configure(wraplength=self.containerFrame.winfo_width() - 8)
+
+        self.containerFrame.bind("<Configure>", reTextWrap)
+
+        self.containerFrame.grid(row=row, column=column, sticky="nsew")
+        self.metaFrame.grid(row=1, column=0, columnspan=2, sticky="nsew")
+
+    def destroy(self):
+
+        if self.modFile in self.gui.modList:
+
+            self.modFile.uninstall()
+
+            self.containerFrame.destroy()
+
+
+
+## Taken from 
+## https://blog.tecladocode.com/tkinter-scrollable-frames/
+
+class ScrollableFrame(ttk.Frame):
+    def __init__(self, container, gui, *args, **kwargs):
+        super().__init__(container, *args, **kwargs)
+
+        print(gui.style.element_options("Frame.border"))
+
+        self.canvas = tk.Canvas(self, bg=gui.style.lookup("TFrame", "background"), highlightcolor=gui.style.lookup("TFrame", "darkcolor"), highlightbackground=gui.style.lookup("TFrame", "darkcolor"))
+        scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = ttk.Frame(self.canvas, borderwidth=0)
+
+        self.scrollable_frame.grid_columnconfigure(0, weight=1)
+
+        self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvasWindow = self.canvas.create_window((4, 4), window=self.scrollable_frame, anchor="nw")
+
+        def resize(evt):
+
+            self.canvas.itemconfig(self.canvasWindow, width = self.canvas.winfo_width() - 4)
+
+
+        self.canvas.bind("<Configure>", resize)
+
+
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+
+        self.canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
 
 
