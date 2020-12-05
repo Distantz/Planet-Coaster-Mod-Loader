@@ -1,0 +1,48 @@
+{
+  "config_dir": "Q:\\Programming\\Modding\\Planco\\pcmod\\ManagerBackend\\planetcoastermodloader-pcm-backend-multi\\planetcoastermodloader-pcm-backend-multi\\.pyupdater",
+  "filename": "Q:\\Programming\\Modding\\Planco\\pcmod\\ManagerBackend\\planetcoastermodloader-pcm-backend-multi\\planetcoastermodloader-pcm-backend-multi\\.pyupdater\\config.pyu",
+  "count": 0,
+  "app_config": {
+    "APP_NAME": "PC Mod Manager",
+    "CLIENT_CONFIG_PATH": [
+      "client_config.py"
+    ],
+    "COMPANY_NAME": "Evan, Distantz",
+    "PLUGIN_CONFIGS": {},
+    "UPDATE_PATCHES": true,
+    "MAX_DOWNLOAD_RETRIES": 3,
+    "HTTP_TIMEOUT": 30,
+    "UPDATE_URLS": [
+      "https://drive.google.com/file/d/1HZKygYlkeDYVXI0pkYkG1NMuvNX_-SIh/view?usp=sharing"
+    ],
+    "DATA_DIR": "Q:\\Programming\\Modding\\Planco\\pcmod\\ManagerBackend\\planetcoastermodloader-pcm-backend-multi\\planetcoastermodloader-pcm-backend-multi"
+  },
+  "version_meta": {
+    "updates": {
+      "PC Mod Manager": {
+        "1.0.0.2.0": {
+          "win": {
+            "file_hash": "d67ce4ccdd581db357b24fed8326feedc4964ed4e287b142f38b6ce4e1c5223d",
+            "file_size": 61581745,
+            "filename": "PC Mod Manager-win-1.0.0.zip"
+          }
+        }
+      }
+    },
+    "latest": {
+      "PC Mod Manager": {
+        "stable": {
+          "win": "1.0.0.2.0"
+        }
+      }
+    }
+  },
+  "py_repo_config": {
+    "patches": {},
+    "package": {
+      "PC Mod Manager": {
+        "win": "1.0.0.2.0"
+      }
+    }
+  }
+}
