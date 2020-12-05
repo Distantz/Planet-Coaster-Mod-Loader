@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE niftoolsxml>
+<niftoolsxml version="0.7.1.0">
+
+    <token name="operator" attrs="cond vercond arr1 arr2 arg">
+        All Operators except for unary not (!), parentheses, and member of (\)
+        NOTE: These can be ignored entirely by string substitution and dealt with directly.
+        NOTE: These must be listed after the above tokens so that they replace last. For example, `verexpr` uses these tokens.
+        <operator token="#ADD#" string="+" />
+        <operator token="#SUB#" string="-" />
+        <operator token="#MUL#" string="*" />
+        <operator token="#DIV#" string="/" />
+        <operator token="#AND#" string="&amp;&amp;" />
+        <operator token="#OR#" string="||" />
+        <operator token="#LT#" string="&lt;" />
+        <operator token="#GT#" string="&gt;" />
+        <operator token="#LTE#" string="&lt;=" />
+        <operator token="#GTE#" string="&gt;=" />
+        <operator token="#EQ#" string="==" />
+        <operator token="#NEQ#" string="!=" />
+        <operator token="#RSH#" string="&gt;&gt;" />
+        <operator token="#LSH#" string="&lt;&lt;" />
+        <operator token="#BITAND#" string="&amp;" />
+        <operator token="#BITOR#" string="|" />
+        <operator token="#MOD#" string="%" />
+    </token>
+
+    <!--Basic Types-->
+
+    <basic name="ubyte" count="1">
+        An unsigned 8-bit integer.
+    </basic>
+    <basic name="byte" count="1">
+        A signed 8-bit integer.
+    </basic>
+
+    <basic name="uint64" count="1">
+        An unsigned 64-bit integer.
+    </basic>
+    <basic name="uint" count="1">
+        An unsigned 32-bit integer.
+    </basic>
+    <basic name="ushort" count="1" >
+        An unsigned 16-bit integer.
+    </basic>
+
+    <basic name="int64" count="1" >
+        A signed 64-bit integer.
+    </basic>
+
+    <basic name="int" count="1" >
+        A signed 32-bit integer.
+    </basic>
+
+    <basic name="short" count="1" >
+        A signed 16-bit integer.
+    </basic>
+	
+    <basic name="char" count="0" >
+        An 8-bit character.
+    </basic>
+	
+    <basic name="float" count="0" >
+        A standard 32-bit floating point number.
+    </basic>
+	
+	    <compound name="DataPointer">
+        second Section of a soundback aux
+        <add name="wem id" type="uint" ></add>
+        <add name="data section offset" type="uint" >offset into data section</add>
+        <add name="wem filesize" type="uint" >length of the wem file</add>
+    </compound>
+
+    <compound name="BKHDSection">
+        First Section of a soundback aux
+<!--        <add name="magic" type="byte" arr1="4">'BKHD'</add>-->
+        <add name="length" type="uint" >length of following data</add>
+        <add name="version" type="uint" ></add>
+        <add name="IdA" type="uint" ></add>
+        <add name="IdB" type="uint" ></add>
+        <add name="constantA" type="uint" ></add>
+        <add name="constantB" type="uint" ></add>
+        <add name="zeroes" type="byte" arr1="length - 20">filler zeroes</add>
+    </compound>
+
+    <compound name="DIDXSection">
+        second Section of a soundback aux
+<!--        <add name="magic" type="byte" arr1="4">'DIDX'</add>-->
+        <add name="length" type="uint" >length of following data</add>
+        <add name="data pointers" type="DataPointer" arr1="length/12" ></add>
+
+    </compound>
+
+    <compound name="DATASection">
+        second Section of a soundback aux
+<!--        <add name="magic" type="byte" arr1="4">'DATA'</add>-->
+        <add name="length" type="uint" >length of following data</add>
+        <add name="wem files datas" type="byte" arr1="length" ></add>
+    </compound>
+
+    <compound name="HIRCSection">
+        The HIRC section contains all the Wwise objects, including the events, the containers to group sounds, and the references to the sound files.
+<!--        <add name="magic" type="byte" arr1="4">'HIRC'</add>-->
+        <add name="length" type="uint" >length of following data</add>
+        <add name="count" type="uint" ></add>
+        <add name="hirc pointers" type="HircPointer" arr1="count" ></add>
+    </compound>
+
+    <compound name="HircPointer">
+
+        <add name="id" type="byte" >length of following data</add>
+        <add name="data" type="Type2" cond="id == 2" ></add>
+        <add name="data" type="TypeOther" cond="id != 2" ></add>
+    </compound>
+
+    <compound name="Type2">
+        Sound SFX/Sound Voice
+        02 -- identifier for Sound SFX section
+        <add name="length" type="uint">length of this section</add>
+        <add name="sfx id" type="uint" >id of this Sound SFX object</add>
+        <add name="const a" type="uint" >?</add>
+        <add name="const b" type="byte" >?</add>
+        <add name="didx id" type="uint" >?</add>
+        <add name="wem length" type="uint" >?</add>
+        <add name="extra" type="byte" arr1="length - 17" >?</add>
+    </compound>
+
+    <compound name="TypeOther">
+        generic
+        <add name="length" type="uint">length of this section</add>
+        <add name="raw" type="byte" arr1="length">id of this Sound SFX object</add>
+    </compound>
+
+<!--    <compound name="AuxFileContainer">-->
+<!--        Custom file struct-->
+
+<!--        This reads a whole aux soundbank file-->
+<!--        <add name="bkhd chunk" type="BKHDSection" ></add>-->
+<!--        <add name="didx chunk" type="DIDXSection" ></add>-->
+<!--        <add name="data chunk" type="DATASection" ></add>-->
+<!--&lt;!&ndash;        <add name="zeroes" type="byte" arr1="?????">theres thousands of zeroes after the three chunks, not sure how to do this</add>&ndash;&gt;-->
+<!--    </compound>-->
+
+</niftoolsxml>
