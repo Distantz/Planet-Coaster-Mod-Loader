@@ -28,7 +28,7 @@ class Updater():
 
 	def check_update(self, version):
 		tag = self.get_tag()
-		if version != tag:
+		if version < tag:
 			return True
 		else:
 			return False
