@@ -2,6 +2,7 @@ import tkinter as tk
 import shutil
 import configparser
 import pcm
+import time
 from tkinter import ttk
 from tkinter import font
 from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames
@@ -135,6 +136,12 @@ class Gui():
         self.metaAuthLabel = ttk.Label(self.exportModMetaFrame, text="Author(s):", font = font.Font(size=11, weight="bold"))
         self.metaAuthEntry = ttk.Entry(self.exportModMetaFrame)
 
+        self.metaNameEntry.insert(0, "Unnamed mod")
+        self.metaDescEntry.insert(0, "A default mod description")
+        self.metaAuthEntry.insert(0, "Unnamed")
+
+
+
         self.metaNameLabel.grid(row=0, column=0, sticky="nsew")
         self.metaNameEntry.grid(row=1, column=0, sticky="nsew")
         self.metaDescLabel.grid(row=2, column=0, sticky="nsew")
@@ -188,16 +195,23 @@ class Gui():
             self.exportFileList = []
 
         fileDir = askopenfilenames()
-        ovlDir = ""
 
         for file in fileDir:
-            self.exportFileList.append(PackFileWidget(self, self.exportModCanvasFrame.scrollable_frame, len(self.exportFileList), 0, ovlDir, file))
-            self.exportFileList[-1].entryVar.set(ovlDir)
+
+            item = PackFileWidget(self, self.exportModCanvasFrame.scrollable_frame, len(self.exportFileList), 0, "", file)
+
+            self.exportFileList.append(item)
 
     def RemoveAllPackFiles(self):
-        for item in self.exportFileList:
-            print(item.file)
-            item.destroy()
+
+        print("RemoveAllPackFiles")
+        print(self.exportFileList)
+
+        while len(self.exportFileList) != 0:
+
+            self.exportFileList[0].destroy()
+            self.exportModCanvasFrame.scrollable_frame.update()
+            self.exportModCanvasFrame.canvas.update()
 
     def styles(self):
 
@@ -295,24 +309,34 @@ class Gui():
         shutil.rmtree(self.saveDir)
 
     def inject_mod(self, filepath):
-        self.modToBeInjected = Mod(self)
-        #self.modList = self.loadModsList()
-        self.modToBeInjected.loadMeta(filepath)
-            
-        if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
-            self.modToBeInjected.install(filepath)
-            self.modToBeInjected.save()
-            self.modList.append(self.modToBeInjected)
-            widget = ModTileWidget(self.modToBeInjected, self, self.manageModsScrollFrame.scrollable_frame, self.modList.index(self.modToBeInjected), 0)
-            self.modWidgetList.append(widget)
 
-        else:
-            messagebox.showinfo("Information", "Mod with this name is already installed, try remove any mods with the same name!") #Add in option to continue?
+        if filepath != "":
+            self.modToBeInjected = Mod(self)
+            #self.modList = self.loadModsList()
+            self.modToBeInjected.loadMeta(filepath)
+            
+            if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
+                self.modToBeInjected.install(filepath)
+                self.modToBeInjected.save()
+                self.modList.append(self.modToBeInjected)
+                widget = ModTileWidget(self.modToBeInjected, self, self.manageModsScrollFrame.scrollable_frame, self.modList.index(self.modToBeInjected), 0)
+                self.modWidgetList.append(widget)
+
+            else:
+                messagebox.showinfo("Information", "Mod with this name is already installed, try remove any mods with the same name!")
+
+                #Add in option to continue? 
+                #> Nah bro i'm lazy
+                
 
     def restore(self):
+        
+        print("In Restore")
+
         for i in range(len(self.modWidgetList)):
+
+            print(i)
             self.modWidgetList[i].destroy()
-            #self.modWidgetList[i].modFile.uninstall()
 
     def loadModsList(self):
         self.tempList = []
@@ -459,11 +483,6 @@ class ModTileWidget():
             self.containerFrame.destroy()
             self.modFile.uninstall()
 
-
-
-## Taken from 
-## https://blog.tecladocode.com/tkinter-scrollable-frames/
-
 class ScrollableFrame(ttk.Frame):
     def __init__(self, container, gui, *args, **kwargs):
         super().__init__(container, *args, **kwargs)
@@ -492,8 +511,6 @@ class ScrollableFrame(ttk.Frame):
 
         self.canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
-
-
 
 gui = Gui()
 

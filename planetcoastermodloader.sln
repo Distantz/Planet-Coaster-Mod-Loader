@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "planetcoastermodloader", "planetcoastermodloader.pyproj", "{20B7CF6C-1AD4-47B8-8765-3A8A9221C1C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20B7CF6C-1AD4-47B8-8765-3A8A9221C1C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B7CF6C-1AD4-47B8-8765-3A8A9221C1C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A7A16A8-9BC3-44F2-A3E8-4DFFC4275B86}
+	EndGlobalSection
+EndGlobal

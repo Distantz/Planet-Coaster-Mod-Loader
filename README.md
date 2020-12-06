@@ -32,4 +32,5 @@ Once finished, the mod can be exported by clicking the Pack button at the bottom
 * iDro
 
 ### Derivatives 
-* Injecting game files: https://github.com/OpenNaja/cobra-tools, thank you!
+* Injecting game files: https://github.com/OpenNaja/cobra-tools
+* Scrollable Frames based off: https://blog.tecladocode.com/tkinter-scrollable-frames
