@@ -112,16 +112,8 @@ class Mod():
 
                         print("NAME: " + self.name)
                         print("TEMPPATH + "+self.temppath)
-                        #print(path.join(path.dirname(sys.executable), self.temppath))
-                        #zipfile.extract(self.name, path=self.temppath)
-                        with zipfile.open(self.name) as out:
-                            fileData = out.read()
-                            try:
-                                os.mkdir(dir_path + "/" + self.temppath + "/" + self.sanitised_path)
-                            except:
-                                pass
-                            with open("test", "wb") as out2: #dir_path + "/" + self.temppath+"/"+self.name, "wb+") as out2:
-                                out2.write(fileData)
+
+                        zipfile.extract(self.name, path=self.temppath)
 
                         self.fileSplit = self.file.rsplit("\\",1)
                         self.file = "{}/{}/{}/{}".format(dir_path, self.temppath, self.sanitised_path, self.file)
