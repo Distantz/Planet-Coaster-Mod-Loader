@@ -3,6 +3,7 @@ import shutil
 import configparser
 import pcm
 import time
+import subprocess
 from tkinter import ttk
 from tkinter import font
 from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames
@@ -105,7 +106,7 @@ class Gui():
         self.manageModsButtonFrame.grid_columnconfigure(1, weight=0, uniform="button")
         self.manageModsButtonFrame.grid_columnconfigure(2, weight=0, uniform="button")
 
-        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path+"/Mods")))
+        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path+"/Mods", filetypes=[("PC Mod Package","*.pcm")])))
         self.manageModsInstallButton.grid(row=0, column=0, sticky="nsew")
 
         self.manageModsRestoreButton = ttk.Button(self.manageModsButtonFrame, text="Uninstall all mods", command= lambda: self.restore())
@@ -236,7 +237,7 @@ class Gui():
 
                 if self.planetCoasterDir.split("/")[-1] != "Planet Coaster":
 
-                    messagebox.showerror("Error", "Not a valid Planet Coaster directory!")
+                    messagebox.showerror("Error!", "Not a valid Planet Coaster directory!")
 
                 else:
                     break
@@ -305,28 +306,45 @@ class Gui():
             shutil.copyfile(self.test.file, self.saveDir + "/" + self.dirName + "/" +self.test.file.split("/")[-1])
 
         shutil.make_archive(self.saveDir, 'zip', self.saveDir)
-        rename(self.saveDir + ".zip", self.saveDir + ".pcm")
-        shutil.rmtree(self.saveDir)
+
+        try:
+            rename(self.saveDir + ".zip", self.saveDir + ".pcm")
+            shutil.rmtree(self.saveDir)
+
+            messagebox.showinfo("Info!", "The mod was successfully exported to the directory: {}".format(dir_path + "/" + self.saveDir + ".pcm"))
+
+        except:
+
+            messagebox.showerror("Error!", "The temporary .zip file could not be saved into a .pcm file, does a .pcm file with the same name as the packed mod exist?")
+
+        
 
     def inject_mod(self, filepath):
 
         if filepath != "":
-            self.modToBeInjected = Mod(self)
-            #self.modList = self.loadModsList()
-            self.modToBeInjected.loadMeta(filepath)
+
+            try:
+
+                self.modToBeInjected = Mod(self)
+                #self.modList = self.loadModsList()
+                self.modToBeInjected.loadMeta(filepath)
             
-            if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
-                self.modToBeInjected.install(filepath)
-                self.modToBeInjected.save()
-                self.modList.append(self.modToBeInjected)
-                widget = ModTileWidget(self.modToBeInjected, self, self.manageModsScrollFrame.scrollable_frame, self.modList.index(self.modToBeInjected), 0)
-                self.modWidgetList.append(widget)
+                if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
+                    self.modToBeInjected.install(filepath)
+                    self.modToBeInjected.save()
+                    self.modList.append(self.modToBeInjected)
+                    widget = ModTileWidget(self.modToBeInjected, self, self.manageModsScrollFrame.scrollable_frame, self.modList.index(self.modToBeInjected), 0)
+                    self.modWidgetList.append(widget)
 
-            else:
-                messagebox.showinfo("Information", "Mod with this name is already installed, try remove any mods with the same name!")
+                else:
+                    messagebox.showinfo("Information", "Mod with this name is already installed, try remove any mods with the same name!")
 
-                #Add in option to continue? 
-                #> Nah bro i'm lazy
+                    #Add in option to continue? 
+                    #> Nah bro i'm lazy
+
+            except:
+
+                messagebox.showerror("Error!", "The selected mod failed to install.")
                 
 
     def restore(self):
@@ -414,7 +432,7 @@ class PackFileWidget():
             
                 if dir.split(".")[-1] != "ovl":
 
-                    messagebox.showerror("Error", "Not an OVL file!")
+                    messagebox.showerror("Error!", "Not an OVL file!")
                     return self.entryVar.get()
 
                 else:
@@ -423,7 +441,7 @@ class PackFileWidget():
 
             else:
 
-                messagebox.showerror("Error", "Not a valid Planet Coaster directory!")
+                messagebox.showerror("Error!", "Not a valid Planet Coaster directory!")
                 return self.entryVar.get()
 
         else:
@@ -486,8 +504,6 @@ class ModTileWidget():
 class ScrollableFrame(ttk.Frame):
     def __init__(self, container, gui, *args, **kwargs):
         super().__init__(container, *args, **kwargs)
-
-        print(gui.style.element_options("Frame.border"))
 
         self.canvas = tk.Canvas(self, bg=gui.style.lookup("TFrame", "background"), highlightcolor=gui.style.lookup("TFrame", "darkcolor"), highlightbackground=gui.style.lookup("TFrame", "darkcolor"))
         scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)

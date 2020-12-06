@@ -145,7 +145,7 @@ class Mod():
         self.ovsDir = self.directory[:-1] + "s"
         self.ovsDestination = self.getBackupPathDestination(relativeFilepath)[:-1] + "s"
 
-        if path.exists(self.destination):
+        if path.exists(self.directory):
             shutil.copyfile(self.directory, self.destination)
         else:
             pass
