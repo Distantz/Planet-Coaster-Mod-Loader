@@ -9,7 +9,7 @@ class Updater():
 	def update(self):
 		filename = "update.zip"
 
-		response = requests.get("https://api.github.com/repos/EvanMad/hello-world/releases/latest")
+		response = requests.get("https://api.github.com/repos/Distantz/Planet-Coaster-Mod-Loader/releases/latest")
 		LatestURL = response.json()["assets"][0]["browser_download_url"]
 		tag = response.json()["tag_name"]
 		print(LatestURL)
@@ -34,5 +34,5 @@ class Updater():
 			return False
 
 	def get_tag(self):
-		response = requests.get("https://api.github.com/repos/EvanMad/hello-world/releases/latest")
+		response = requests.get("https://api.github.com/repos/Distantz/Planet-Coaster-Mod-Loader/releases/latest")
 		return response.json()["tag_name"]
