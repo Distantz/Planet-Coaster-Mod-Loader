@@ -1,0 +1,113 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "D:/Github/Projects/planetcoastermodloader/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": true
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "D:/Github/Projects/planetcoastermodloader/Data/icon.ico"
+  },
+  {
+   "optionDest": "name",
+   "value": "PCModManager"
+  },
+  {
+   "optionDest": "ascii",
+   "value": false
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "win_private_assemblies",
+   "value": false
+  },
+  {
+   "optionDest": "win_no_prefer_redirects",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\awthemes-9.3.1;awthemes-9.3.1/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\codegen;codegen/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\Data;Data/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\generated;generated/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\icons;icons/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\Mods;Mods/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\modules;modules/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\source;source/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\util;util/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:\\Github\\Projects\\planetcoastermodloader\\utils;utils/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "D:/Github/Projects/planetcoastermodloader/update_standalone.exe;."
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

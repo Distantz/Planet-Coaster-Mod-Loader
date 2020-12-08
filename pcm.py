@@ -27,5 +27,5 @@ class pcm:
 		self.data = {**self.write_meta(), **self.input_files}
 
 	def pcm_write_to_file(self, path):
-		with open(path + "\\mod.json", "w") as self.out:
+		with open(path + "/mod.json", "w") as self.out:
 			json.dump(self.data, self.out)

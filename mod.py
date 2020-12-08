@@ -74,9 +74,6 @@ class Mod():
                 dump(self.modData, file)
         self.gui.modList.pop(self.gui.modList.index(self))
 
-        #print("backup {}".format(self.getBackupPathDestination(self.backupPath)))
-        #restore(self.gui, self.getBackupPathDestination(self.backupPath))
-
     def install(self, filepath):
         with ZipFile(filepath) as zipfile:
             with zipfile.open("mod.json") as jsonFile:

@@ -10,7 +10,7 @@ class Updater():
 
 	def check_update(self, version):
 		tag = self.get_tag()
-		if version < tag:
+		if float(version) < float(tag):
 
 			return True
 

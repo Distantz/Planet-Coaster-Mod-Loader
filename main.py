@@ -2,11 +2,12 @@ import tkinter as tk
 import shutil
 import configparser
 import pcm
-import time
 import subprocess
+import winshell
+import webbrowser
 from tkinter import ttk
 from tkinter import font
-from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames
+from tkinter.filedialog import askopenfilename, askdirectory, askopenfilenames, asksaveasfilename
 from tkinter import messagebox
 from tkinter import simpledialog
 
@@ -27,23 +28,26 @@ from updater import Updater
 class Gui():
 
     def __init__(self):
+
+        ## Set version (tag) of release here!
+        self.version = 1.0
+
         self.setupEnv()
         self.setupGui()
 
     def setupEnv(self):
+
         self.appDataDir = "{}/PCModManager".format(getenv("APPDATA"))
-        self.modsDir = "{}/Documents/PCModManager/Mods".format(path.expanduser('~'))    #"{}/Mods".format(self.appDataDir)
         self.dataDir = "{}/Data".format(self.appDataDir)
         self.modsJsonPath = "{}/mods.json".format(self.dataDir)
 
         if path.exists(self.appDataDir) == False:
             mkdir(self.appDataDir)
             print("Appdata doesn't exist, creating it...")
-        
-        if path.exists(self.modsDir) == False:
-            mkdir(self.modsDir)
+
         if path.exists(self.dataDir) == False:
             mkdir(self.dataDir)
+
         if path.exists(self.modsJsonPath) == False:
             with open(self.modsJsonPath,"w"): pass
 
@@ -121,7 +125,7 @@ class Gui():
         self.manageModsButtonFrame.grid_columnconfigure(1, weight=0, uniform="button")
         self.manageModsButtonFrame.grid_columnconfigure(2, weight=0, uniform="button")
 
-        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = self.modsDir, filetypes=[("PC Mod Package","*.pcm")])))
+        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path, filetypes=[("PC Mod Package","*.pcm")])))
         self.manageModsInstallButton.grid(row=0, column=0, sticky="nsew")
 
         self.manageModsRestoreButton = ttk.Button(self.manageModsButtonFrame, text="Uninstall all mods", command= lambda: self.restore())
@@ -197,11 +201,6 @@ class Gui():
            
         self.config()
 
-        try:
-            mkdir(self.backupDir)
-        except:
-            pass
-
         self.mainWindow.mainloop()
 
     def createNewExportFile(self):
@@ -220,14 +219,14 @@ class Gui():
 
     def RemoveAllPackFiles(self):
 
-        print("RemoveAllPackFiles")
-        print(self.exportFileList)
+        try:
+            while len(self.exportFileList) != 0:
 
-        while len(self.exportFileList) != 0:
-
-            self.exportFileList[0].destroy()
-            self.exportModCanvasFrame.scrollable_frame.update()
-            self.exportModCanvasFrame.canvas.update()
+                self.exportFileList[0].destroy()
+                self.exportModCanvasFrame.scrollable_frame.update()
+                self.exportModCanvasFrame.canvas.update()
+        except:
+            pass
 
     def styles(self):
 
@@ -237,13 +236,25 @@ class Gui():
     def config(self):
 
         self.configParser = configparser.ConfigParser()
-        self.configParser.read("Data/config.ini")
 
-        self.planetCoasterDir = self.configParser["DEFAULT"]["GameDirectory"]
-        self.backupDir = "{}/backups".format(self.planetCoasterDir)
+        if not path.isfile("{}/config.ini".format(self.dataDir)):
+
+            self.configParser["DEFAULT"] = {"GameDirectory": "", "version": 1.0}
+
+            with open("{}/config.ini".format(self.dataDir), "w") as configfile:
+
+                self.configParser.write(configfile)
+
+                configfile.close()
 
 
-        if self.configParser["DEFAULT"]["HasSetup"] != "True" or not path.isdir(self.configParser["DEFAULT"]["GameDirectory"]):
+
+        self.configParser = configparser.ConfigParser()
+
+        self.configParser.read("{}/config.ini".format(self.dataDir))
+       
+
+        if not path.isdir(self.configParser["DEFAULT"]["GameDirectory"]):
 
             self.planetCoasterDir = messagebox.showinfo("Welcome!", "Please select your Planet Coaster installation folder (usually found in the Steamgames folder)") 
 
@@ -258,22 +269,34 @@ class Gui():
                 else:
                     break
 
-            self.configParser["DEFAULT"] = {
-                "GameDirectory": self.planetCoasterDir, "HasSetup": True}
-            
-            with open("Data/config.ini", "w") as configfile:
-                self.configParser.write(configfile)
+        else:
 
-        self.version = self.configParser["DEFAULT"]["version"]
+            self.planetCoasterDir = self.configParser["DEFAULT"]["GameDirectory"]
+
+
+        self.configParser["DEFAULT"] = {
+            "GameDirectory": self.planetCoasterDir, "version": self.version}
+        
+        with open("{}/config.ini".format(self.dataDir), "w") as configfile:
+            self.configParser.write(configfile)
+        
+        self.backupDir = "{}/backups".format(self.planetCoasterDir)
+
+        try:
+            mkdir(self.backupDir)
+        except:
+            pass
+
+        
+
         try:
             self.updater = Updater()
+
             if self.updater.check_update(self.version):
                 print("updating...")
-                messagebox.showinfo("Updater", "Update Required To Version {} \n{}".format(self.updater.get_tag(), self.updater.get_desc()))
+                if messagebox.askyesno("Info!", "Update found to Version {} (current is Version {})\nUpdate Description: {}\n\nDo you want to visit the download page?".format(self.updater.get_tag(), self.version, self.updater.get_desc())):
+                    webbrowser.open("https://github.com/Distantz/Planet-Coaster-Mod-Loader/releases/tag/{}".format(self.updater.get_tag()), new=0, autoraise=True)
 
-            self.configParser["DEFAULT"]["version"] = self.updater.get_tag()
-            with open("Data/config.ini", "w") as configfile:
-                self.configParser.write(configfile)
         except:
             messagebox.showinfo("Updater Broke", "Updater could not ping github server so cannot check for update")
 
@@ -282,6 +305,15 @@ class Gui():
         self.modName = (self.metaNameEntry.get()).strip()
         self.metaAuth = (self.metaAuthEntry.get()).strip()
         self.metaDesc = (self.metaDescEntry.get()).strip()
+
+        outputDir = asksaveasfilename(title = "Pick output folder", initialdir = dir_path, filetypes=[("PC Mod Package","*.pcm")], initialfile = self.modName).replace(" ", "_")
+
+        if outputDir == "":
+
+            print("I dont think so")
+            return 
+
+
 
         self.Meta = pcm.meta(self.modName ,self.metaAuth,self.metaDesc)
 
@@ -297,11 +329,22 @@ class Gui():
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
             self.out["Files"][self.shortenedOVLPath].append((self.test.file.rsplit("/",1)[1]))
 
-        self.saveDir = "{}/{}".format(self.modsDir, self.modName)
+        self.saveDir = outputDir
+
         try:
+
             mkdir(self.saveDir)
+
+            with open("{}/mod.json".format(self.saveDir), "w") as file:
+
+                file.write("{}")
+                file.close()
+
         except:
-            pass
+
+            raise ValueError
+
+
         self.Meta = pcm.meta(self.metaNameEntry.get() ,self.metaAuthEntry.get(),self.metaDescEntry.get())
         self.PCM = pcm.pcm(self.out, self.Meta)
         self.PCM.write_meta()
@@ -321,17 +364,10 @@ class Gui():
 
         shutil.make_archive(self.saveDir, 'zip', self.saveDir)
 
-        try:
-            rename(self.saveDir + ".zip", self.saveDir + ".pcm")
-            shutil.rmtree(self.saveDir)
+        rename(self.saveDir + ".zip", self.saveDir + ".pcm")
+        shutil.rmtree(self.saveDir)
 
-            messagebox.showinfo("Info!", "The mod was successfully exported to the directory: {}".format(self.saveDir + ".pcm"))
-
-        except:
-
-            messagebox.showerror("Error!", "The temporary .zip file could not be saved into a .pcm file, does a .pcm file with the same name as the packed mod exist?")
-
-        
+        messagebox.showinfo("Info!", "The mod was successfully exported to the directory: {}".format(self.saveDir + ".pcm"))
 
     def inject_mod(self, filepath):
 
@@ -359,7 +395,6 @@ class Gui():
 
                 messagebox.showerror("Error!", "The selected mod failed to install.")
                 
-
     def restore(self):
         
         print("In Restore")
