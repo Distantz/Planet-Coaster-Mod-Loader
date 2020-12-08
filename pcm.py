@@ -23,22 +23,9 @@ class pcm:
 
 	def write_pcm(self):
 		self.data["Files"] = {}
-		#self.data["Files"][self.path] = []
 
 		self.data = {**self.write_meta(), **self.input_files}
-
-		#Init paths
-		#for self.file, self.path in self.input_files.items():
-			#self.data["Files"][self.path] = []
-
-		#Append paths
-		#for self.file, self.path in self.input_files.items():
-			#self.data["Files"][self.path].append(self.file)
-		#return self.data
 
 	def pcm_write_to_file(self, path):
 		with open(path + "\\mod.json", "w") as self.out:
 			json.dump(self.data, self.out)
-
-
-#files = ["Win64\\ovldata\\Content0\\Characters\\Staff\\Janitor\\Janitor.ovl#jmbody.pspecularsamplertexture.PNG", "Win64\\ovldata\\Content0\\Characters\\Staff\\Janitor\\Janitor.ovl#jmbody.pnormaltexture.PNG", "Win64\\ovldata\\Content0\\Characters\\Staff\\Janitor\\Janitor.ovl#jmbody.pdiffusetexture.PNG"]

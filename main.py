@@ -14,12 +14,10 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 
 from mod import Mod
 
-from os import path, mkdir, rename
+from os import path, mkdir, rename, getenv
 from shutil import copy, copyfile
 from json import dump, loads
 from zipfile import ZipFile
-
-from util import widgets
 
 from modules import inject
 from generated.formats.ovl import OvlFile
@@ -29,8 +27,25 @@ from updater import Updater
 class Gui():
 
     def __init__(self):
+        self.setupEnv()
         self.setupGui()
 
+    def setupEnv(self):
+        self.appDataDir = "{}/PCModManager".format(getenv("APPDATA"))
+        self.modsDir = "{}/Documents/PCModManager/Mods".format(path.expanduser('~'))    #"{}/Mods".format(self.appDataDir)
+        self.dataDir = "{}/Data".format(self.appDataDir)
+        self.modsJsonPath = "{}/mods.json".format(self.dataDir)
+
+        if path.exists(self.appDataDir) == False:
+            mkdir(self.appDataDir)
+            print("Appdata doesn't exist, creating it...")
+        
+        if path.exists(self.modsDir) == False:
+            mkdir(self.modsDir)
+        if path.exists(self.dataDir) == False:
+            mkdir(self.dataDir)
+        if path.exists(self.modsJsonPath) == False:
+            with open(self.modsJsonPath,"w"): pass
 
     def setupGui(self):
 
@@ -106,7 +121,7 @@ class Gui():
         self.manageModsButtonFrame.grid_columnconfigure(1, weight=0, uniform="button")
         self.manageModsButtonFrame.grid_columnconfigure(2, weight=0, uniform="button")
 
-        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = dir_path+"/Mods", filetypes=[("PC Mod Package","*.pcm")])))
+        self.manageModsInstallButton = ttk.Button(self.manageModsButtonFrame, text="Install new mod", command= lambda: self.inject_mod(askopenfilename(initialdir = self.modsDir, filetypes=[("PC Mod Package","*.pcm")])))
         self.manageModsInstallButton.grid(row=0, column=0, sticky="nsew")
 
         self.manageModsRestoreButton = ttk.Button(self.manageModsButtonFrame, text="Uninstall all mods", command= lambda: self.restore())
@@ -183,7 +198,7 @@ class Gui():
         self.config()
 
         try:
-            mkdir(self.planetCoasterDir + "/backups/")
+            mkdir(self.backupDir)
         except:
             pass
 
@@ -221,13 +236,14 @@ class Gui():
 
     def config(self):
 
-        self.config = configparser.ConfigParser()
-        self.config.read("Data/config.ini")
+        self.configParser = configparser.ConfigParser()
+        self.configParser.read("Data/config.ini")
 
-        self.planetCoasterDir = self.config["DEFAULT"]["GameDirectory"]
+        self.planetCoasterDir = self.configParser["DEFAULT"]["GameDirectory"]
+        self.backupDir = "{}/backups".format(self.planetCoasterDir)
 
 
-        if self.config["DEFAULT"]["HasSetup"] != "True" or not path.isdir(self.config["DEFAULT"]["GameDirectory"]):
+        if self.configParser["DEFAULT"]["HasSetup"] != "True" or not path.isdir(self.configParser["DEFAULT"]["GameDirectory"]):
 
             self.planetCoasterDir = messagebox.showinfo("Welcome!", "Please select your Planet Coaster installation folder (usually found in the Steamgames folder)") 
 
@@ -242,24 +258,22 @@ class Gui():
                 else:
                     break
 
-            self.config["DEFAULT"] = {
+            self.configParser["DEFAULT"] = {
                 "GameDirectory": self.planetCoasterDir, "HasSetup": True}
             
             with open("Data/config.ini", "w") as configfile:
-                self.config.write(configfile)
+                self.configParser.write(configfile)
 
-        self.version = self.config["DEFAULT"]["version"]
+        self.version = self.configParser["DEFAULT"]["version"]
         try:
             self.updater = Updater()
             if self.updater.check_update(self.version):
                 print("updating...")
-                messagebox.showinfo("Updater", "Update Required To Version {}".format(self.updater.get_tag()))
-                self.updater.update()
+                messagebox.showinfo("Updater", "Update Required To Version {} \n{}".format(self.updater.get_tag(), self.updater.get_desc()))
 
-
-            self.config["DEFAULT"]["version"] = self.updater.get_tag()
+            self.configParser["DEFAULT"]["version"] = self.updater.get_tag()
             with open("Data/config.ini", "w") as configfile:
-                self.config.write(configfile)
+                self.configParser.write(configfile)
         except:
             messagebox.showinfo("Updater Broke", "Updater could not ping github server so cannot check for update")
 
@@ -283,7 +297,7 @@ class Gui():
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
             self.out["Files"][self.shortenedOVLPath].append((self.test.file.rsplit("/",1)[1]))
 
-        self.saveDir = "Mods/" + self.modName
+        self.saveDir = "{}/{}".format(self.modsDir, self.modName)
         try:
             mkdir(self.saveDir)
         except:
@@ -311,7 +325,7 @@ class Gui():
             rename(self.saveDir + ".zip", self.saveDir + ".pcm")
             shutil.rmtree(self.saveDir)
 
-            messagebox.showinfo("Info!", "The mod was successfully exported to the directory: {}".format(dir_path + "/" + self.saveDir + ".pcm"))
+            messagebox.showinfo("Info!", "The mod was successfully exported to the directory: {}".format(self.saveDir + ".pcm"))
 
         except:
 
@@ -326,7 +340,6 @@ class Gui():
             try:
 
                 self.modToBeInjected = Mod(self)
-                #self.modList = self.loadModsList()
                 self.modToBeInjected.loadMeta(filepath)
             
                 if (any(x.modName == self.modToBeInjected.modName for x in self.modList)) == False:
@@ -358,7 +371,7 @@ class Gui():
 
     def loadModsList(self):
         self.tempList = []
-        with open("Data/mods.json", "r") as file:
+        with open(self.modsJsonPath, "r") as file:
             self.fileData = file.read()
             if len(self.fileData) == 0:
                 return self.tempList

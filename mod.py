@@ -14,7 +14,6 @@ from shutil import copy, copyfile
 from json import dump, loads, load
 from zipfile import ZipFile
 
-from util import widgets
 from modules import inject
 from generated.formats.ovl import OvlFile
 
@@ -34,7 +33,7 @@ class Mod():
                 self.modDesc = (self.metaData["meta"]["Desc"])
 
     def save(self):
-        with open("Data/mods.json", "r") as file_r:
+        with open(self.gui.modsJsonPath, "r") as file_r:
             tempdata = file_r.read()
             if len(tempdata) == 0:
                 self.modData = {}
@@ -49,13 +48,13 @@ class Mod():
             "OVLs" : self.OVLs
             })
         print(self.modData)
-        with open("Data/Mods.json", "w") as file:
+        with open(self.gui.modsJsonPath, "w") as file:
             dump(self.modData, file)
 
     def uninstall(self):
         #self.gui.modList.pop(self.gui.modList.index(self))
         for i,backup  in enumerate(self.backupPaths):
-            self.backuppath = self.gui.planetCoasterDir + "/backups/" + backup.replace("/","]")
+            self.backuppath = "{}/{}".format(self.gui.backupDir, backup.replace("/","]"))
             #print(self.backuppath)
             shutil.copyfile(self.backuppath, self.gui.planetCoasterDir + "/" + self.OVLs[i])
             if path.exists(self.backuppath[:-1]+"s"):
@@ -63,7 +62,7 @@ class Mod():
 
         print("bonked {}".format(self.modName))
 
-        with open("Data/Mods.json", "r") as file_r:
+        with open(self.gui.modsJsonPath, "r") as file_r:
             tempdata = file_r.read()
             if len(tempdata) == 0:
                 self.modData = {}
@@ -71,7 +70,7 @@ class Mod():
                 self.modData = loads(tempdata)
             self.modData.pop(self.modName, None)
 
-            with open("Data/Mods.json", "w") as file:
+            with open(self.gui.modsJsonPath, "w") as file:
                 dump(self.modData, file)
         self.gui.modList.pop(self.gui.modList.index(self))
 
@@ -89,7 +88,8 @@ class Mod():
                 self.modDesc = (self.mod["meta"]["Desc"])
 
                 for self.path, self.files in self.mod["Files"].items():
-                    self.temppath = "Data/temp-files"
+                    print("{}/temp-files".format(self.gui.dataDir))
+                    self.temppath = "{}/temp-files".format(self.gui.dataDir)
                     try:
                         mkdir(self.temppath)
                     except:
@@ -116,7 +116,7 @@ class Mod():
                         zipfile.extract(self.name, path=self.temppath)
 
                         self.fileSplit = self.file.rsplit("\\",1)
-                        self.file = "{}/{}/{}/{}".format(dir_path, self.temppath, self.sanitised_path, self.file)
+                        self.file = "{}/{}/{}".format(self.temppath, self.sanitised_path, self.file)
                         print("File: " + self.file)
                         self.filesTemp.append(self.file)
 
@@ -135,7 +135,7 @@ class Mod():
 
     def backup(self, relativeFilepath):
         try:
-            mkdir(self.gui.planetCoasterDir + "/backups/")
+            mkdir(self.gui.backupDir)
         except:
             pass
 
@@ -154,5 +154,5 @@ class Mod():
             shutil.copyfile(self.ovsDir, self.ovsDestination)
 
     def getBackupPathDestination(self, relativeFilepath):
-        self.backupOVLPath ="{}\{}".format(self.gui.planetCoasterDir + "/backups", relativeFilepath.replace("/", "]").replace("\\" , "]").replace(":","#"))
+        self.backupOVLPath ="{}\{}".format(self.gui.backupDir, relativeFilepath.replace("/", "]").replace("\\" , "]").replace(":","#"))
         return self.backupOVLPath
