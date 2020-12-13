@@ -3,7 +3,6 @@ import shutil
 import configparser
 import pcm
 import subprocess
-import winshell
 import webbrowser
 from tkinter import ttk
 from tkinter import font
@@ -67,19 +66,7 @@ class Gui():
         self.mainWindow.iconbitmap(dir_path + '/Data/icon.ico')
 
         self.styles()
-
-        self.mainWindow.tk.eval("""
-        set base_theme_dir {}/awthemes-9.3.1/
-        
-        package ifneeded awthemes 9.3.1 \
-            [list source [file join $base_theme_dir awthemes.tcl]]
-        package ifneeded colorutils 4.8 \
-            [list source [file join $base_theme_dir colorutils.tcl]]
-        package ifneeded awdark 7.7 \
-            [list source [file join $base_theme_dir awdark.tcl]]
-        package ifneeded awlight 7.6 \
-            [list source [file join $base_theme_dir awlight.tcl]]
-        """.format(dir_path))
+        self.mainWindow.tk.call("lappend", "auto_path", "{}/awthemes-9.3.1/".format(dir_path))
 
         self.mainWindow.tk.call("package", "require", 'awdark')
         self.mainWindow.tk.call("package", "require", 'awlight')
@@ -391,8 +378,8 @@ class Gui():
                     #Add in option to continue? 
                     #> Nah bro i'm lazy
 
-            except:
-
+            except Exception as error:
+                print(error)
                 messagebox.showerror("Error!", "The selected mod failed to install.")
                 
     def restore(self):
