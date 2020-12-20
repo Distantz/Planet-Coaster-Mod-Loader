@@ -298,23 +298,20 @@ class Gui():
         if outputDir == "":
 
             print("I dont think so")
-            return 
-
-
+            return
 
         self.Meta = pcm.meta(self.modName ,self.metaAuth,self.metaDesc)
 
         self.out = {}
         self.out["Files"] = {}
-        self.temp = sorted(self.exportFileList, key=lambda x: x.ovlFile, reverse=True)
-        for i,self.test in enumerate(self.temp):
-            self.OVLPath = self.exportFileList[i].entryVar.get()
+        self.filesList = sorted(self.exportFileList, key=lambda x: x.ovlFile, reverse=True)
+        for i,self.filePack in enumerate(self.filesList):
+            self.OVLPath = self.filesList[i].entryVar.get()
             self.shortenedOVLPath = self.OVLPath[self.OVLPath.find("Win64"):]
             self.out["Files"][self.shortenedOVLPath] = []
 
-        for self.test in self.temp:
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
-            self.out["Files"][self.shortenedOVLPath].append((self.test.file.rsplit("/",1)[1]))
+            self.out["Files"][self.shortenedOVLPath].append((self.filePack.file.rsplit("/",1)[1]))
 
         self.saveDir = outputDir
 
@@ -325,7 +322,6 @@ class Gui():
             with open("{}/mod.json".format(self.saveDir), "w") as file:
 
                 file.write("{}")
-                file.close()
 
         except:
 
@@ -338,7 +334,11 @@ class Gui():
         self.PCM.write_pcm()
         self.PCM.pcm_write_to_file(self.saveDir)
 
-        for self.test in self.temp:
+        for i,self.filePack in enumerate(self.filesList):
+
+            self.OVLPath = self.filesList[i].entryVar.get()
+            self.shortenedOVLPath = self.OVLPath[self.OVLPath.find("Win64"):]
+
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
             self.dirName = self.shortenedOVLPath.replace("/","_")
             self.dirName = self.dirName.replace(":","#")
@@ -347,7 +347,7 @@ class Gui():
                 mkdir(self.saveDir + "/" + self.dirName)
             except:
                 pass
-            shutil.copyfile(self.test.file, self.saveDir + "/" + self.dirName + "/" +self.test.file.split("/")[-1])
+            shutil.copyfile(self.filePack.file, self.saveDir + "/" + self.dirName + "/" +self.filePack.file.split("/")[-1])
 
         shutil.make_archive(self.saveDir, 'zip', self.saveDir)
 
