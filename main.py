@@ -308,9 +308,13 @@ class Gui():
         for i,self.filePack in enumerate(self.filesList):
             self.OVLPath = self.filesList[i].entryVar.get()
             self.shortenedOVLPath = self.OVLPath[self.OVLPath.find("Win64"):]
-            self.out["Files"][self.shortenedOVLPath] = []
+            
+            if self.shortenedOVLPath not in self.out["Files"]:
+                self.out["Files"][self.shortenedOVLPath] = []
 
             self.shortenedOVLPath = self.shortenedOVLPath[self.shortenedOVLPath.find("Win64"):]
+            print(type(self.filePack.file))
+            print(self.filePack.file)
             self.out["Files"][self.shortenedOVLPath].append((self.filePack.file.rsplit("/",1)[1]))
 
         self.saveDir = outputDir
