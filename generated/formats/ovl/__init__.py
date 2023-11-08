@@ -50,7 +50,7 @@ class OvsFile(OvsHeader, ZipFile):
 			# print("stream.user_version", stream.user_version)
 			super().read(stream)
 			# print(self.ovl)
-			print(self)
+			#print(self) // This print is so big, it slows down the import progress.
 			print(self.is_pc(), self.is_jwe(), self.is_pz())
 			# print(len(self.ovl.archives))
 			# print(sum([archive.num_files for archive in self.ovl.archives]))
