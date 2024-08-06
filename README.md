@@ -1,3 +1,6 @@
+# IMPORTANT
+As of **07/08/2024**, this repository is now private. Better things are coming for Planet Coaster modding, and this program is now outdated.
+
 # Planet Coaster Mod Loader
 This program installs and packs Planet Coaster mods (.pcm files).
 
